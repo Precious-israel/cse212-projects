@@ -8,12 +8,19 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
-
-        return []; // replace this return statement with your own
+        // My plan:
+        // Need to create array of size 'length'
+        // Loop from 0 to length-1, each position gets number * (position+1)
+        // Because position 0 should be number*1, position 1 should be number*2, etc.
+        
+        double[] result = new double[length];
+        
+        for (int i = 0; i < length; i++)
+        {
+            result[i] = number * (i + 1);
+        }
+        
+        return result;
     }
 
     /// <summary>
@@ -25,9 +32,17 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // My plan:
+        // Rotating right by 'amount' means taking the last 'amount' elements and moving them to the front
+        // Steps:
+        // 1. Find where the last 'amount' elements start: data.Count - amount
+        // 2. Use GetRange to grab those elements
+        // 3. Use RemoveRange to delete them from the end
+        // 4. Use InsertRange to put them at the beginning
+        
+        int startIndex = data.Count - amount;
+        List<int> elementsToMove = data.GetRange(startIndex, amount);
+        data.RemoveRange(startIndex, amount);
+        data.InsertRange(0, elementsToMove);
     }
 }
