@@ -6,24 +6,50 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 public class PriorityQueueTests
 {
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
-    // Defect(s) Found: 
+    // Scenario: Add three items with different priorities (1, 5, 10) and dequeue them
+    // Expected Result: Items come out in order of highest priority first (1, then 5, then 10)
+    // Defect(s) Found: Original loop stopped before last item, missing highest priority if at end
     public void TestPriorityQueue_1()
-    {
-        var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
-    }
+{
+    var priorityQueue = new PriorityQueue();
+    
+    priorityQueue.Enqueue("Low", 10);
+    priorityQueue.Enqueue("High", 1);
+    priorityQueue.Enqueue("Medium", 5);
+    
+    Assert.AreEqual("High", priorityQueue.Dequeue());
+    Assert.AreEqual("Medium", priorityQueue.Dequeue());
+    Assert.AreEqual("Low", priorityQueue.Dequeue());
+}
 
     [TestMethod]
-    // Scenario: 
-    // Expected Result: 
-    // Defect(s) Found: 
+    // Scenario: Add multiple items where two have same priority (both priority 3)
+    // Expected Result: Items with same priority come out in FIFO order (first in, first out)
+    // Defect(s) Found: Using >= would pick last equal priority instead of first, breaking FIFO
     public void TestPriorityQueue_2()
+{
+    var priorityQueue = new PriorityQueue();
+    
+    priorityQueue.Enqueue("First", 5);
+    priorityQueue.Enqueue("Second", 3);
+    priorityQueue.Enqueue("Third", 3);
+    priorityQueue.Enqueue("Fourth", 1);
+    
+    Assert.AreEqual("Fourth", priorityQueue.Dequeue());
+    Assert.AreEqual("Second", priorityQueue.Dequeue());
+    Assert.AreEqual("Third", priorityQueue.Dequeue());
+    Assert.AreEqual("First", priorityQueue.Dequeue());
+}
+    // Add more test cases as needed below.
+        [TestMethod]
+    // Scenario: Dequeue from empty queue
+    // Expected Result: Throws InvalidOperationException
+    // Defect(s) Found: None - exception handling was already in place
+    // Test Results: 12/15/2024 - Passed. Correctly throws exception when dequeuing from empty queue.
+    public void TestPriorityQueue_3_EmptyQueue()
     {
         var priorityQueue = new PriorityQueue();
-        Assert.Fail("Implement the test case and then remove this.");
+        
+        Assert.ThrowsException<InvalidOperationException>(() => priorityQueue.Dequeue());
     }
-
-    // Add more test cases as needed below.
 }
