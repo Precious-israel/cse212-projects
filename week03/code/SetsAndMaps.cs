@@ -21,7 +21,25 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
+        List<string> result = new List<string>();
+    HashSet<string> wordSet = new HashSet<string>(words);
+    
+    foreach (string word in words)
+    { // TO DO ONE
+       // Skip if word has same letters (like "aa")
+        if (word[0] == word[1])
+            continue;
+        
+        // Create the reverse of the word
+        string reversed = $"{word[1]}{word[0]}";
+        
+        // Check if reverse exists and add in format "reversed & original"
+        // Only add once by checking if word < reversed alphabetically
+        if (wordSet.Contains(reversed) && string.Compare(word, reversed) < 0)
+        {
+            result.Add($"{reversed} & {word}");
+        }
+    }
         return [];
     }
 
@@ -43,11 +61,24 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
-        }
 
+ // Degree is in column 4 (index 3)
+            if (fields.Length > 3)
+            {
+                string degree = fields[3].Trim();
+                
+                if (!string.IsNullOrEmpty(degree))
+                {
+                    if (degrees.ContainsKey(degree))
+                        degrees[degree]++;
+                    else
+                        degrees[degree] = 1;
+                }
+            }
+        }
+        
         return degrees;
     }
-
     /// <summary>
     /// Determine if 'word1' and 'word2' are anagrams.  An anagram
     /// is when the same letters in a word are re-organized into a 
@@ -66,9 +97,44 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        // TODO Problem 3 - 
+     // Remove spaces and convert to lowercase
+        string clean1 = word1.Replace(" ", "").ToLower();
+        string clean2 = word2.Replace(" ", "").ToLower();
+        
+        // Quick length check
+        if (clean1.Length != clean2.Length)
+            return false;
+        
+        // Use dictionary to count characters
+        Dictionary<char, int> charCounts = new Dictionary<char, int>();
+        
+        // Count characters from first word
+        foreach (char c in clean1)
+        {
+            if (charCounts.ContainsKey(c))
+                charCounts[c]++;
+            else
+                charCounts[c] = 1;
+        }
+        
+        // Subtract counts using second word
+        foreach (char c in clean2)
+        {
+            if (!charCounts.ContainsKey(c))
+                return false;
+            
+            charCounts[c]--;
+            
+            // Remove key when count reaches zero for efficiency
+            if (charCounts[c] == 0)
+                charCounts.Remove(c);
+        }
+        
+        // All counts should be zero (dictionary empty)
+        return charCounts.Count == 0;
     }
+
 
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
@@ -101,6 +167,21 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
+
+        
+         List<string> result = new List<string>();
+        
+        if (featureCollection?.Features != null)
+        {
+            foreach (var feature in featureCollection.Features)
+            {
+                string place = feature.Properties?.Place ?? "Unknown location";
+                double magnitude = feature.Properties?.Mag ?? 0;
+                result.Add($"{place} - Mag {magnitude}");
+            }
+        }
+        
         return [];
-    }
-}
+           }
+        }
+
