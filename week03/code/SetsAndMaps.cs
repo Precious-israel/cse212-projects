@@ -40,7 +40,7 @@ public static class SetsAndMaps
             result.Add($"{reversed} & {word}");
         }
     }
-        return [];
+        return result.ToArray();
     }
 
     /// <summary>
@@ -181,7 +181,7 @@ public static class SetsAndMaps
             }
         }
         
-        return [];
+        return result.ToArray();
            }
         }
 

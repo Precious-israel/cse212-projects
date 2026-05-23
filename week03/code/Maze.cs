@@ -99,7 +99,7 @@ public class Maze
             // Index 2 represents up direction
             if (directions[2]) // Can move up
             {
-                _currY++; // Move up by increasing y coordinate
+                _currY--; // Move up by decreasing y coordinate
             }
             else
             {
@@ -129,7 +129,7 @@ public class Maze
             // Index 3 represents down direction
             if (directions[3]) // Can move down
             {
-                _currY--; // Move down by decreasing y coordinate
+                _currY++; // Move down by increasing y coordinate
             }
             else
             {
