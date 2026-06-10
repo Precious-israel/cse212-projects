@@ -12,7 +12,11 @@ public class Node
     public void Insert(int value)
     {
         // TODO Start Problem 1
-
+       // Check for duplicate BEFORE going left or right
+        if (value == Data)
+        {
+            return; // Duplicate value - do nothing
+        }
         if (value < Data)
         {
             // Insert to the left
@@ -34,12 +38,40 @@ public class Node
     public bool Contains(int value)
     {
         // TODO Start Problem 2
+         
+         if (value == Data)
+        {
+            return true;
+        }
+        
+        if (value < Data && Left != null)
+        {
+            return Left.Contains(value);
+        }
+        
+        if (value > Data && Right != null)
+        {
+            return Right.Contains(value);
+        }
         return false;
     }
 
     public int GetHeight()
     {
         // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+         int leftHeight = 0;
+        int rightHeight = 0;
+        
+        if (Left != null)
+        {
+            leftHeight = Left.GetHeight();
+        }
+        
+        if (Right != null)
+        {
+            rightHeight = Right.GetHeight();
+        }
+        
+        return 1 + Math.Max(leftHeight, rightHeight);
     }
 }
